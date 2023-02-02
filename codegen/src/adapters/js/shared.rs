@@ -30,7 +30,7 @@ pub struct ReactComponent {
     pub name: String,
     /// What support files to include
     #[arg(short, long, num_args = 1.., value_delimiter = ' ')]
-    pub file_include: Vec<ReactSupport>,
+    pub file_include: Option<Vec<ReactSupport>>,
 }
 
 #[derive(Clone, Debug, ValueEnum)]
