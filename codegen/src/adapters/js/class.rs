@@ -1,33 +1,7 @@
-use clap::{Args, ValueEnum};
+use crate::{capitalize, Class};
 use crate::adapters::shared::FileResponse;
 
-#[derive(Args, Debug)]
-pub struct JS {
-    /// Generator to use
-    #[arg(short, long, value_enum)]
-    generator: JSGenerator,
-    /// Filename and generated item name
-    #[arg(short, long)]
-    name: String,
-    /// Any additional properties relevant to the generated item
-    #[arg(short, long, num_args = 1.., value_delimiter = ' ')]
-    properties: Vec<String>,
-}
-
-#[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, ValueEnum)]
-pub enum JSGenerator {
-    Class,
-    ReactComponent,
-}
-
-pub fn main(config: JS) -> Vec<FileResponse> {
-    return match config.generator {
-        JSGenerator::Class => generate_class(config),
-        JSGenerator::ReactComponent => generate_react_component(config),
-    };
-}
-
-fn generate_class(config: JS) -> Vec<FileResponse> {
+pub fn generate_class(config: Class) -> Vec<FileResponse> {
     println!("Generating class...");
     let mut files = vec![];
 
@@ -82,20 +56,3 @@ fn generate_class(config: JS) -> Vec<FileResponse> {
     files
 }
 
-fn generate_react_component(config: JS) -> Vec<FileResponse> {
-    println!("Generating react-component...");
-    println!("{:?}", config);
-    let files = vec![];
-    files
-}
-
-fn capitalize(s: &str) -> String {
-    let mut new_s = String::new();
-    let mut cs = s.chars();
-    let first = cs.next().expect("Should have at least one character");
-    new_s.push(first.to_ascii_uppercase());
-    while let Some(c) = cs.next() {
-        new_s.push(c);
-    }
-    new_s
-}
