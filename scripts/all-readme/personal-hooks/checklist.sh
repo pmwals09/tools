@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 
 # Ideally would have a place to read the checklist from
-# prompt each item
-# exit on first failed item
-
 declare -a CheckList=(
   "check PDF output"
   "check all report types (single facility, multi-facility, asc, office"
